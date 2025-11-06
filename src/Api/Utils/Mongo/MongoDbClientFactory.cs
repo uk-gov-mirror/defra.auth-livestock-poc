@@ -18,11 +18,15 @@ public class MongoDbClientFactory : IMongoDbClientFactory
         var databaseName = config.Value.DatabaseName;
         
         if (string.IsNullOrWhiteSpace(uri))
+        {
             throw new ArgumentException("MongoDB uri string cannot be empty");
+        }
 
         if (string.IsNullOrWhiteSpace(databaseName))
+        {
             throw new ArgumentException("MongoDB database name cannot be empty");
-        
+        }
+
         var settings = MongoClientSettings.FromConnectionString(uri);
         _client = new MongoClient(settings);
 

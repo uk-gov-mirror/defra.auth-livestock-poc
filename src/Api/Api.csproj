@@ -1,3 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
+  <ItemGroup>
+    <Folder Include="Middleware\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Example\**" />
+    <Compile Remove="Utils\Mongo\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Example\**" />
+    <EmbeddedResource Remove="Utils\Mongo\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Example\**" />
+    <Content Remove="Utils\Mongo\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Example\**" />
+    <None Remove="Utils\Mongo\**" />
+  </ItemGroup>
 </Project>

@@ -1,7 +1,14 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Net;
+﻿// <copyright file="ProxyHttpMessageHandler.cs" company="DEFRA">
+// Copyright (c) Defra. All rights reserved.
+// </copyright>
 
 namespace Livestock.Auth.Utils.Http;
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using System.Net.Http;
+using Microsoft;
 
 public class ProxyHttpMessageHandler : HttpClientHandler
 {
@@ -21,20 +28,25 @@ public class ProxyHttpMessageHandler : HttpClientHandler
             }
 
             // Remove credentials from URI to so they don't get logged.
-            uri.UserName = "";
-            uri.Password = "";
+            uri.UserName = string.Empty;
+            uri.Password = string.Empty;
             proxy.Address = uri.Uri;
         }
 
-        Proxy = proxy;
-        UseProxy = proxyUri != null;
+        this.Proxy = proxy;
+        this.UseProxy = proxyUri != null;
     }
 
     public static NetworkCredential? GetCredentialsFromUri(UriBuilder uri)
     {
+        Requires.NotNull(uri);
         var username = uri.UserName;
         var password = uri.Password;
-        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)) return null;
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+        {
+            return null;
+        }
+
         return new NetworkCredential(username, password);
     }
 }

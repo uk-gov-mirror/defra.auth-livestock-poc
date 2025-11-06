@@ -2,10 +2,31 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <RootNamespace>Livestock.Auth</RootNamespace>
     <ProductName>Livestock.Auth</ProductName>
   </PropertyGroup>
+  
+  <!-- Common References -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Validation" />
+  </ItemGroup>
+  
+  <!-- Analysers -->
+  <ItemGroup>
+    <GlobalPackageReference Include="StyleCop.Analyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; buildl; native; contentfiles; analyzers</IncludeAssets>
+    </GlobalPackageReference>
+    <GlobalPackageReference Include="Roslynator.Analyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; buildl; native; contentfiles; analyzers</IncludeAssets>
+    </GlobalPackageReference>
+
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json">
+      <Link>Properties\stylecop.json</Link>
+    </AdditionalFiles>
+  </ItemGroup>
+  
 </Project>
 

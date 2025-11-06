@@ -100,3 +100,9 @@ volumes:
 networks:
   cdp-tenant:
     driver: bridge
+  webapplication1:
+    image: webapplication1
+    build:
+      context: .
+      dockerfile: src/WebApplication1/Dockerfile
+
