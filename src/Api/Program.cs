@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentValidation;
 using Livestock.Auth.Config;
 using Livestock.Auth.Context;
+using Livestock.Auth.Models;
 using Livestock.Auth.Utils.Http;
 using Livestock.Auth.Utils.Logging;
 using Microsoft.AspNetCore.Builder;
@@ -32,7 +33,6 @@ public static class Program
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
         SetupApplication(app);
@@ -93,6 +93,9 @@ public static class Program
                     .EnableSensitiveDataLogging(builder.Environment.IsDevelopment());
             });
 
+        builder.Services.AddControllers(options =>
+            options.ModelBinderProviders.Insert(0, new CphNumberModelBinderProvider()));
+
         builder.Services.AddSwaggerGen(options =>
         {
             options.EnableAnnotations();
@@ -108,9 +111,12 @@ public static class Program
         app.UseSwagger();
         app.UseSwaggerUI();
         app.UseHttpsRedirection();
-        app.UseAuthorization();
+
+        // app.UseAuthorization();
         app.UseHeaderPropagation();
         app.UseRouting();
+
+        app.MapControllers();
         app.MapHealthChecks("/health");
     }
 }

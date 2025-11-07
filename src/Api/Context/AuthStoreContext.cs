@@ -4,21 +4,26 @@
 
 namespace Livestock.Auth.Context;
 
+using Livestock.Auth.Context.DataModel;
 using Microsoft.EntityFrameworkCore;
 
-public class AuthStoreContext : DbContext
+/// <summary>
+/// The Auth store context.
+/// </summary>
+public partial class AuthStoreContext : DbContext
 {
+    public AuthStoreContext()
+    {
+    }
+
     public AuthStoreContext(DbContextOptions<AuthStoreContext> options)
         : base(options)
     {
     }
 
-    // Add your DbSets here
-    // public DbSet<YourEntity> YourEntities { get; set; }
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
+    public virtual DbSet<Cph> Cphs { get; set; }
 
-        // Configure your entity mappings here
-    }
+    public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<UserCphMapping> UserCphMappings { get; set; }
 }

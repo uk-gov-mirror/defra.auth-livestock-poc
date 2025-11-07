@@ -1,25 +1,31 @@
-using Livestock.Auth.Utils.Http;
+﻿// <copyright file="ProxyHttpMessageHandlerTests.cs" company="DEFRA">
+// Copyright (c) Defra. All rights reserved.
+// </copyright>
 
 namespace Livestock.Auth.Test.Utils.Http;
 
+using System;
+using FluentAssertions;
+using Livestock.Auth.Utils.Http;
+
 public class ProxyHttpMessageHandlerTests
 {
-    
     [Fact]
     public void ExtractsCredentialsFromUri()
     {
+        var creds = ProxyHttpMessageHandler.GetCredentialsFromUri(
+            new UriBuilder("http://username:password@www.example.com"));
 
-        var creds = ProxyHttpMessageHandler.GetCredentialsFromUri(new UriBuilder("http://username:password@www.example.com"));
+        creds.Should().NotBeNull();
         Assert.NotNull(creds);
-        Assert.Equal("username", creds.UserName);
-        Assert.Equal("password", creds.Password);
+        creds.UserName.Should().Be("username");
+        creds.Password.Should().Be("password");
     }
 
     [Fact]
     public void DoNotExtractCredentialsFromUriWithoutThem()
     {
         var creds = ProxyHttpMessageHandler.GetCredentialsFromUri(new UriBuilder("http://www.example.com"));
-        Assert.Null(creds);
+        creds.Should().BeNull();
     }
-
 }
